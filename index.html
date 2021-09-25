@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>Bem</title>
+</head>
+<body>
+
+    <!-- chay hamf onclick -->
+   
+    <!-- <i class="fas fa-check-circle"></i>
+        <i class="fas fa-radiation-alt"></i>
+        <i class="fas fa-exclamation-triangle"></i>
+       fas fa-info-circle
+
+        <div class="toast__icon">
+                        <i class="${icon}"></i>
+                    </div>
+                    <div class="toast__body">
+                        <h3 class="toast__title">${title}</h3>
+                        <p class="toast__msg">${message}</p>
+                    </div>
+                    <div class="toast__close">
+                        <i class="fas fa-times"></i>
+                    </div>
+         <div class="toast toast--info">
+            <div class="toast__icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class="toast__title">${title}</h3>
+                <p class="toast__msg">${message}</p>
+            </div>
+            <div class="toast__close">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+       
+    animation: showToast linear 0.3s, hideToast linear 1s 3s forwards;
+
+    -->
+    <div id="toast"></div>
+    
+    <!-- <div id="toast"></div> -->
+    <button onclick="showToastSuccess();" class="btn btn--success">Success</button>
+    <button onclick="hideToastSuccess();" class="btn btn--wraning">wraning</button>
+
+    <script>
+        function toast({
+            title = '',
+            message = '',
+            type = '',
+            duration = 3000
+        }){
+            const main = document.getElementById('toast');
+            if(main){
+                const toast = document.createElement('div');
+
+                toast.classList.add('toast',`toast--${type}`);
+
+                const delay = (duration/1000).toFixed(2)
+
+                toast.style.animation =`showToast linear 0.3s, hideToast linear 1s ${delay}s forwards`;
+
+                const autoRemove = setTimeout(function () {
+                    main.removeChild(toast);
+                },duration+1000);
+
+                toast.onclick = function(e) {
+                    if(e.target.closest('.toast__close'))
+                    {
+                        main.removeChild(toast);
+                        clearTimeout(autoRemove);
+                    }
+                }
+
+                const icons = {
+                    success : 'fas fa-check-circle',
+                    info :'fas fa-info-circle',
+                    danger :'fas fa-radiation-alt',
+                    error:'fas fa-exclamation-triangle'
+                }
+
+                const icon = icons[type];
+
+                toast.innerHTML = `
+                <div class="toast__icon">
+                    <i class="${icon}"></i>
+                </div>
+                <div class="toast__body">
+                    <h3 class="toast__title">${title}</h3>
+                    <p class="toast__msg">${message}</p>
+                </div>
+                <div class="toast__close">
+                    <i class="fas fa-times"></i>
+                </div>
+                `;
+
+                main.appendChild(toast);
+            }
+        }
+
+
+        function showToastSuccess(){
+            toast({
+                    title:'Thanh cong',
+                    message:'Chuc mung ban thanh cong',
+                    type:'success',
+                    duration:3000
+            })
+        }
+        function hideToastSuccess(){
+            toast({
+                    title:'Thanh cong',
+                    message:'Chuc mung ban thanh cong',
+                    type:'danger',
+                    duration:3000
+            })
+        }
+    </script>
+</body>
+</html>
